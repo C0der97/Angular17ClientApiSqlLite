@@ -11,12 +11,8 @@ import { Student } from '../../../Models/Student';
   styleUrl: './list.component.css'
 })
 export class ListComponent {
-
-
-  constructor(private cd: ChangeDetectorRef) {}
-
   @Input() loadStudentsData: boolean = false;
-    @Output() openEditModal = new EventEmitter<number>();
+  @Output() openEditModal = new EventEmitter<number>();
   @Output() openCreateModal = new EventEmitter<boolean>();
   @Output() openDeleteModal = new EventEmitter<number>();
 
@@ -28,18 +24,7 @@ export class ListComponent {
     this.loadStudents();
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    console.log("llamado");
-
-    if (changes['loadStudentsData'] && this.loadStudentsData) {
-    console.log("llamado a api");
-
-      this.loadStudents();
-    }
-  }
-
   editStudent(idNumber: number) {
-    this.cd.detectChanges();
     this.openEditModal.emit(idNumber);
   }
 
@@ -56,7 +41,6 @@ export class ListComponent {
       {
         next: (students) => {
           this.students.set(students);
-          this.cd.detectChanges();
         },
         error: (err) => {
           console.log(err);

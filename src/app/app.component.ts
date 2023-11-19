@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, ViewChild, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { ListComponent } from "./Components/Student/list/list.component";
@@ -13,6 +13,9 @@ import { CreateEditComponent } from "./Components/Student/create-edit/create-edi
     imports: [CommonModule, RouterOutlet, ListComponent, DeleteComponent, CreateEditComponent]
 })
 export class AppComponent {
+
+  @ViewChild('studentListComponent') childComponent!: ListComponent;
+
   openModal = false;
 
   openDeleteModal = false;
@@ -56,6 +59,7 @@ export class AppComponent {
   }
 
   loadStudents(loadStudents: boolean){
+    this.childComponent.loadStudents();
     this.loadStudentsAfterCreate = loadStudents;
   }
 
