@@ -29,7 +29,7 @@ export class StudentService {
   }
 
   getStudentById(id: number){
-    return this.httpClient.get<Student>(`"http://localhost:5294/Students/${id}`);
+    return this.httpClient.get<Student>(this.apiUrl+"/Students/"+id);
   }
 
   putStudent(student: Student){
@@ -37,6 +37,6 @@ export class StudentService {
   }
 
   deleteStudent(id:number){
-    return this.httpClient.delete<Student>(`"${this.apiUrl}/Students/${id}`);
+    return this.httpClient.delete<Student>(this.apiUrl+"/Students/"+id);
   }
 }
