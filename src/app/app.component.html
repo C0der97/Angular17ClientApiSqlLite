@@ -1,247 +1,27 @@
+
+<student-create-edit 
+*ngIf="openModal" 
+[studentId]="idStudent" 
+(openCreateEditModal)="openModalStudent($event)"
+[textBtnModalStudent]="textBtnModalStudent"
+(loadStudents)="loadStudents($event)"
+>
+</student-create-edit>
+
+<student-delete 
+*ngIf="openDeleteModal"
+[studentId]="idStudent"
+(closeDeleteModal)="closeCancelConfirmModal($event)"
+(loadStudents)="loadStudents($event)">
+</student-delete>
+
 <section class="py-1 bg-blueGray-50">
-
-
-  <!---Modal -->
-  <div *ngIf="openModal"
-    class="fixed insert-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-10 fix-margin-top">
-    <div class="relative top-20 mx-auto p-3 border w-96 shadow-lg rounded-md bg-white">
-        <div class="flex w-full justify-between">
-
-          <div class="flex content-center ">
-            <h2 class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl text-center">Student
-            </h2>
-          </div>
-
-          <div class="flex content-end">
-            <button type="button" (click)="closeStudentModal()" class="w-10  h-10 text-white transition-colors duration-150 bg-gray-800 border border-r-0 border-indigo-600 rounded-full focus:shadow-outline">
-              <span class="text-xl">✕</span>
-          </button>
-          </div>
-
-        </div>
-
- 
-
-      <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-6">
-        <div class="lg:col-span-6">
-          <form [formGroup]="formStudent" (submit)="submitStudent()">
-            <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-6">
-              <div class="md:col-span-6">
-                <label for="full_name">First Name</label>
-                <input type="text" formControlName="firstName" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                  value="" />
-              </div>
-
-              <div class="md:col-span-6">
-                <label for="full_name">Last Name</label>
-                <input type="text" formControlName="lastName" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                  value="" />
-              </div>
-
-              <div class="md:col-span-6">
-                <label for="full_name">Identifer</label>
-                <input type="text" formControlName="identifier" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                  value="" />
-              </div>
-
-              <div class="md:col-span-6">
-                <label for="full_name">Degree</label>
-                <select formControlName="degree"
-                  class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                  <option value="Business Administration / Management">Business Administration / Management</option>
-                  <option value="Computer Science">Computer Science</option>
-                  <option value="Nursing">Nursing</option>
-                  <option value="Mechanical Engineering">Mechanical Engineering</option>
-                  <option value="Psychology">Psychology</option>
-                  <option value="Biology">Biology</option>
-                  <option value="Civil Engineering">Civil Engineering</option>
-                  <option value="Political Science">Political Science</option>
-                </select>
-              </div>
-
-              <div class="md:col-span-6">
-                <label for="soda">Age</label>
-                <div class="h-10 w-28 bg-gray-50 flex border border-gray-200 rounded items-center mt-1">
-                  <button type="button" (click)="downAge()" tabindex="-1" for="show_more"
-                    class="cursor-pointer outline-none focus:outline-none border-r border-gray-200 transition-all text-gray-500 hover:text-blue-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mx-2" viewBox="0 0 20 20"
-                      fill="currentColor">
-                      <path fill-rule="evenodd"
-                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                        clip-rule="evenodd" />
-                    </svg>
-                  </button>
-                  <input formControlName="age" placeholder="0"
-                    class="px-2 text-center appearance-none outline-none text-gray-800 w-full bg-transparent" v
-                    alue="0" />
-                  <button type="button" (click)="upAge()" tabindex="-1" for="show_more"
-                    class="cursor-pointer outline-none focus:outline-none border-l border-gray-200 transition-all text-gray-500 hover:text-blue-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mx-2 fill-current" viewBox="0 0 20 20"
-                      fill="currentColor">
-                      <path fill-rule="evenodd"
-                        d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
-                        clip-rule="evenodd" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-
-              <div class="md:col-span-6">
-                <div class="md:flex">
-                  <button type="submit" [disabled]="!formStudent.valid"
-                    class="px-4 py-2 bg-indigo-500 text-white
-                                          text-base font-medium rounded-md w-full
-                                          shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-300">
-                    {{textBtnModalStudent}}
-                  </button>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-    <!---Modal -->
-    <div *ngIf="openDeleteModal"
-    class="fixed insert-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-10 fix-margin-top">
-    <div class="relative top-20 mx-auto p-3 border w-96 shadow-lg rounded-md bg-white">
-        <div class="flex w-full justify-between">
-
-          <div class="flex content-center ">
-            <h2 class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl text-center">Confirm Action
-            </h2>
-          </div>
-
-          <div class="flex content-end">
-            <button type="button" (click)="closeCancelConfirmModal()" class="w-10  h-10 text-white transition-colors duration-150 bg-gray-800 border border-r-0 border-indigo-600 rounded-full focus:shadow-outline">
-              <span class="text-xl">✕</span>
-          </button>
-          </div>
-
-        </div>
-
-        <div class="flex justify-center">
-          <div class="flex mr-4">
-            <button type="button"
-            (click)="deleteStudent()"
-              class="px-4 py-2 bg-indigo-500 text-white
-                                    text-base font-medium rounded-md w-full
-                                    shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-300">
-              Yes
-            </button>
-          </div>
-
-          <div class="flex">
-            <button type="button"
-            (click)="closeCancelConfirmModal()"
-              class="px-4 py-2 bg-gray-50 text-black
-                                    text-base font-medium rounded-md w-full
-                                    shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-50-300">
-              No
-            </button>
-          </div>
-        </div>
-
-    </div>
-  </div>
-
-
-
-  <div class="w-full xl:w-8/12 mb-12 xl:mb-0 px-4 mx-auto mt-24">
-    <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded ">
-      <div class="rounded-t mb-0 px-4 py-3 border-0">
-        <div class="flex flex-wrap items-center">
-          <div class="relative w-full px-4 max-w-full flex-grow flex-1">
-            <h3 class="font-semibold text-base text-blueGray-700">Students</h3>
-          </div>
-          <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
-            <button (click)="openStudentModal()"
-              class="bg-indigo-500 text-white active:bg-lime-400 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-              type="button">Create Student</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="block w-full overflow-x-auto">
-        <table class="items-center bg-transparent w-full border-collapse ">
-          <thead>
-            <tr>
-              <th
-                class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                Identifier
-              </th>
-              <th
-                class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                First Name
-              </th>
-              <th
-                class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                Last Name
-              </th>
-              <th
-                class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                Age
-              </th>
-              <th
-                class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                Degree
-              </th>
-
-              <th
-                class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                Action
-              </th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr *ngFor="let student of students()">
-
-
-              <th
-                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                {{ student.identifier}}
-              </th>
-
-              <th
-                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                {{ student.firstName}}
-              </th>
-
-              <th
-                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                {{ student.lastName}}
-              </th>
-              <th
-                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                {{ student.age}}
-              </th>
-              <th
-                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                {{ student.degree}}
-              </th>
-
-              <th
-                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                <button (click)="getStudentById(student.id)"
-                  class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                  type="button">Edit</button>
-                <button
-                  (click)="openCancelConfirmModal(student.id)"
-                  class="bg-red-500 text-white active:bg-red-500 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                  type="button">Delete</button>
-
-              </th>
-            </tr>
-          </tbody>
-
-        </table>
-      </div>
-    </div>
-  </div>
+  <students-list 
+  (openCreateModal)="openCreateModalStudent($event)"
+  (openEditModal)="openEditModalStudent($event)"
+  (openDeleteModal)="openDeleteModalStudent($event)"
+  [loadStudentsData]="loadStudentsAfterCreate">
+</students-list>
   <footer class="relative pt-8 pb-6 mt-16">
     <div class="container mx-auto px-4">
       <div class="flex flex-wrap items-center md:justify-between justify-center">
